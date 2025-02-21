@@ -2,13 +2,18 @@
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
-a {
+.nav-item {
   text-decoration: none;
   color: rgb(187, 180, 180);
   margin-top: 2rem;
 }
-a:hover {
+.nav-item:hover {
   color: rgb(255, 255, 255);
+  text-decoration: underline;
+  scale: 1.1;
+}
+.nav-item#panel:hover {
+  color: rgb(54, 174, 90);
   text-decoration: underline;
   scale: 1.1;
 }
@@ -23,7 +28,7 @@ body {
 header {
   background: #454545;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(202, 174, 174, 0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -32,8 +37,12 @@ header {
 
 header h1 {
   font-size: 2rem;
-  color: #fff;
+  background: linear-gradient(90deg, #ececec, #919191);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin: 0;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 header nav {
@@ -102,6 +111,7 @@ header nav a:hover {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
+  text-decoration: none;
 }
 
 .feature-item:hover {
@@ -117,6 +127,17 @@ header nav a:hover {
   font-size: 1.5rem;
   margin: 15px 0;
   color: #4facfe;
+  text-decoration: none;
+}
+
+.feature-item p {
+  font-size: 1.1rem;
+  color: white;
+}
+.feature-item span {
+  /* font-size: 1.1rem; */
+  color: white;
+  text-decoration: underline;
 }
 
 .footer {
@@ -125,4 +146,71 @@ header nav a:hover {
   background: #454545;
   color: #fff;
   margin-top: 50px;
+}
+
+/* contact */
+.contact-section {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  text-align: center;
+}
+
+.contact-form {
+  margin-top: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.form-group textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+button {
+  background: #4facfe;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: #2196f3;
+}
+
+#formMessage {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.cf-turnstile {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
 }

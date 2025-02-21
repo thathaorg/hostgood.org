@@ -15,52 +15,142 @@
     <header>
       <h1>Hostgood.org</h1>
       <nav>
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact Us</a>
+        <a class="nav-item" href="#features">Features</a>
+        <a class="nav-item" id="panel" href="https://panel.hostgood.org:8083"
+          >Panel</a
+        >
+        <a class="nav-item" href="#contact">Contact Us</a>
       </nav>
     </header>
 
     <section class="hero animate__animated animate__fadeIn">
       <h2>Your Reliable Web Hosting Partner</h2>
       <p>Blazing fast hosting solutions for your personal or business needs.</p>
-      <p>Sceured with auto-renew SSL certificates.</p>
+      <p>Sceured with auto-renewed SSL certificates.</p>
       <h4>Wordpress • PHP • Documentation • And much more</h4>
-      <a href="#pricing" class="cta-button">Get Started Now</a>
+      <a href="https://panel.hostgood.org:8083" class="cta-button"
+        >Access the panel</a
+      >
     </section>
 
     <section id="features" class="features">
-      <div class="feature-item">
+      <a href="https://panel.hostgood.org:8083" class="feature-item">
         <img src="./panel.png" alt="Control Panel" />
         <h3>Easy Control Panel</h3>
         <p>Manage your hosting with an intuitive control panel. <br /></p>
-        <a href="https://panel.hostgood.org:8083" target="_blank"
-          >panel.hostgood.org</a
-        >
-      </div>
-      <div class="feature-item">
+        <span>panel.hostgood.org</span>
+      </a>
+      <a href="https://webmail.hostgood.org" class="feature-item">
         <img src="./webmail.png" alt="Webmail" width="200px" />
         <h3>Webmail Access</h3>
         <p>Stay connected with our powerful webmail interface. <br /></p>
-        <a href="https://webmail.hostgood.org" target="_blank"
-          >webmail.hostgood.org</a
-        >
-      </div>
-      <div class="feature-item">
+        <span>webmail.hostgood.org</span>
+      </a>
+      <a class="feature-item">
         <img src="./support.png" alt="Support" />
         <h3>24/7 Support</h3>
         <p>Our team is always available to assist you.</p>
-      </div>
+      </a>
     </section>
 
     <section id="pricing" class="hero animate__animated animate__fadeIn">
-      <h2>Affordable Pricing Plans</h2>
-      <p>Choose the plan that fits your needs and budget.</p>
-      <a href="#contact" class="cta-button">View Plans</a>
+      <div class="contact-section">
+        <h2>Contact Us for Pricing</h2>
+        <p>
+          Get in touch with us to discuss your requirements and receive
+          personalized pricing.
+        </p>
+
+        <form id="contactForm" class="contact-form">
+          <div class="form-group">
+            <input type="text" name="name" placeholder="Your Name" required />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              name="company"
+              placeholder="Company Name (Optional)"
+            />
+          </div>
+
+          <div class="form-group">
+            <textarea
+              name="message"
+              placeholder="Tell us about your requirements"
+              required
+            ></textarea>
+          </div>
+          <div
+            class="cf-turnstile"
+            data-sitekey="0x4AAAAAAA9yvOKSzdecMBUi"
+          ></div>
+          <button type="submit">Send Message</button>
+          <div id="formMessage"></div>
+        </form>
+      </div>
     </section>
 
     <footer class="footer">
       <p>&copy; 2025 Hostgood.org. All Rights Reserved.</p>
     </footer>
   </body>
+  <script
+    src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+    async
+    defer
+  ></script>
+
+  <script>
+    document
+      .getElementById("contactForm")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Get Turnstile token
+        const token = turnstile.getResponse();
+        if (!token) {
+          document.getElementById("formMessage").className = "error";
+          document.getElementById("formMessage").textContent =
+            "Please complete the challenge";
+          return;
+        }
+
+        const formData = new FormData(this);
+        formData.append("cf-turnstile-response", token);
+
+        const messageDiv = document.getElementById("formMessage");
+        messageDiv.textContent = "Sending...";
+
+        fetch("contact.php", {
+          method: "POST",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              messageDiv.className = "success";
+              messageDiv.textContent = data.success;
+              this.reset();
+              turnstile.reset(); // Reset Turnstile
+            } else {
+              messageDiv.className = "error";
+              messageDiv.textContent = data.error;
+            }
+          })
+          .catch((error) => {
+            messageDiv.className = "error";
+            messageDiv.textContent = "An error occurred. Please try again.";
+          });
+      });
+  </script>
 </html>
